@@ -1,0 +1,119 @@
+﻿
+@model BudgetViewModel
+@{
+    ViewData["Title"] = "Budgets";
+    var total = 0.00;
+}
+
+<h2>Your budget.</h2>
+<h1>please note that for this page to work correctly you MUST have put your information in on a tax page first. you MUST  also be aware that this page will not
+    dynamically update your total cost after deletion of an item.just add another item for zero dollars and it will reflect what your budget is.</h1>
+
+
+<form method="post">
+    <label for="Username" class="control-label">Search by Username:</label>
+    <input name="Username" class="form-control" />
+    <input type="submit" name="submitButton" id="submitButton" value="Search" />
+    <hr />
+
+    <label class="text-success">@ViewBag.Saved</label><br />
+    <label class="text-danger">@ViewBag.Error</label><br />
+    <label asp-for="NewBudgetItem.User.Name"></label><br />
+    <input asp-for="NewBudgetItem.User.Name" /><br />
+    <label asp-for="NewBudgetItem.BudgetItem"></label><br />
+    <input asp-for="NewBudgetItem.BudgetItem" /><br />
+    <label asp-for="NewBudgetItem.Amount"></label><br />
+    <input asp-for="NewBudgetItem.Amount" /><br />
+    <input type="submit" name="submitButton" id="submitButton" value="Submit" /><br />
+    <hr />
+    <label asp-for="Limit"></label><br />
+    <input asp-for="Limit" /><br />
+</form>
+
+<hr />
+
+<h3>Finance Info</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Salary</th>
+            <th>Medicare</th>
+            <th>SSN</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (TaxModel item in Model.Finances)
+        {
+            <tr>
+                <td>@item.Month</td>
+                <td>@item.MonthlyIncome</td>
+                <td>@item.Medicare</td>
+                <td>@item.SocialSecurity</td>
+                @{total = total + item.SocialSecurity + item.Medicare;}
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h3>Budget Items</h3>
+<table class=" table table-responsive table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Item</th>
+            <th>Amount</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BudgetModel item in Model.BudgetItems)
+        {
+
+        <tr>
+            <td>@item.User.Name</td>
+
+            <td>@item.BudgetItem</td>
+            @{ total += item.Amount; } 
+            <td>@item.Amount</td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteBudgetItem", new {id = item.BudgetID })
+            </td>
+        </tr>
+        
+        }
+        </tbody>
+    </table>
+
+<h3>Budget Status</h3>
+
+<span id="budgetStatus"></span>
+
+These are your total costs @Html.Raw(total);
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $("#Limit").on("change", function () {
+
+                 var limit = $("#Limit").val();
+               if (limit < @total) {
+                    $("#budgetStatus").text("Your expenses are greater than your budget limit.");
+                    $("#budgetStatus").addClass("text-danger");
+                } else {
+                    $("#budgetStatus").text("Your expenses are under your budget limit");
+                    $("#budgetStatus").removeClass("text-danger");
+                    $("#budgetStatus").addClass("text-success");
+                }
+            });
+        });
+
+    </script>
+
+}

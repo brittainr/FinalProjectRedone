@@ -1,0 +1,20 @@
+﻿@model FinalProjectRedone.Models.BudgetModel
+@{
+    ViewData["Title"] = "Budget";
+}
+
+<form method="post">
+
+    <label asp-for="User.Name">r</label>Name<br />
+    <input asp-for="User.Name" /><br />
+    <label asp-for="BudgetItem">Expense</label><br />
+    <input asp-for="BudgetItem" /><br />
+    <label asp-for="Amount"></label>Cost<br />
+    <input asp-for="Amount" /><br />
+    <button class="m-2 btn btn-primary" type="submit">Submit</button>
+</form>
+<br />
+<hr />
+
+
+<a asp-controller="Budget" asp-action="Budget">Budget</a>

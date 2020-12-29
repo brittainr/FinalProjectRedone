@@ -1,0 +1,49 @@
+﻿@model TaxModel
+@{
+    ViewData["Title"] = "Tax";
+}
+
+<form method="post">
+    <label class="text-success">@ViewBag.Saved</label><br />
+    <label class="text-danger">@ViewBag.Error</label><br />
+
+    <label asp-for="User.Name">What is your name?</label><br />
+    <input asp-for="User.Name" /><br />
+
+    <label asp-for="Month">What month is this for?</label><br />
+    <input asp-for="Month" /><br />
+
+
+    <label asp-for="MonthlyIncome"></label>What is your salary before taxes?<br />
+    <input asp-for="MonthlyIncome" /><br />
+
+
+    <label asp-for="MonthlyQuestion"></label>Is this salary a monthly salary? you must enter y for yes and n for no. <br />
+    <input asp-for="MonthlyQuestion" /><br />
+
+
+
+    <button class="m-2 btn btn-primary" type="submit">Submit</button>
+</form>
+
+
+
+@if (Model != null && ViewBag.Success)
+{ 
+<h2>your money after taxes.</h2>
+<p>
+    <strong class="m-3">Name:</strong>
+    @Model.User.Name<br />
+    <strong class="m-3">Month:</strong>
+    @Model.Month<br />
+    <strong class="m-3">Confirmation Question:  </strong>
+    @Model.MonthlyQuestion<br />
+    <strong class="m-3">Monthly salary: </strong>
+    @Model.MonthlyIncome<br />
+    <strong class="m-3">Medicare Cost: </strong>
+    @Model.Medicare<br />
+    <strong class="m-3">Social Security Cost: </strong>
+    @Model.SocialSecurity<br />
+</p>
+}
+
