@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProjectRedone.Migrations
 {
     [DbContext(typeof(TaxContext))]
-    [Migration("20201221232352_initial")]
-    partial class initial
+    [Migration("20201230023106_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
