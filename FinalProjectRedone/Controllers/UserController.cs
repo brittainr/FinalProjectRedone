@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProjectRedone.Controllers
 {
-    //[Authorize(Roles = "Admin")]
-   
+    [Authorize(Roles = "Admin")]
+
     public class UserController : Controller
     {
         
