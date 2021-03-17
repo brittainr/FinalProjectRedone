@@ -90,6 +90,69 @@ namespace FinalProjectRedone.Repos
             
             
         }
-    
+        public IQueryable<Post> Forum
+        {
+            get
+
+            {
+                // Get all the Review objects in the Reviews DbSet
+                // and include the Reivewer object and list of comments in each Review.
+                return context.Posts.Include(post => post.User)
+                         .Include(post => post.Replies)
+                         .ThenInclude(reply => reply.Replier);
+            }
+        }
+
+
+        public void AddPost(Post post)
+        {
+            post.User = (UserModel)context.Users.Where(u => u.UserName == post.User.Name).FirstOrDefault();// allowing the story object to be virtual 
+            //maked this possible. assigning full connected object store.user.name which is an asp net user object. first or default is a search. 
+            //it will return first object or if it is empty it will return null.
+            context.Posts.Add(post);
+            context.SaveChanges();
+        }
+
+        public void DeleteRange(string id)
+        {
+            var posts = context.Posts.Where(s => s.User.Id == id).ToList();
+            context.Posts.RemoveRange(posts);
+            context.SaveChanges();
+        }
+
+        public void DeletePost(Post post)
+        {
+            post.User = (UserModel)context.Users.Where(u => u.UserName == post.User.Name).FirstOrDefault();
+
+            context.Posts.Remove(post);
+            context.SaveChanges();
+        }
+
+        public Post GetPostByTitle(string Title)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserModel GetUser(string username)
+        {
+            var user = (UserModel)context.Users.Where(p => p.UserName == username).FirstOrDefault();
+            return user;
+        }
+
+        public void UpdatePost(Post post)
+        {
+            context.Posts.Update(post);   // Find the review by ReviewID and update it
+            context.SaveChanges();
+        }
+
+        //public void UpdateCold(string id, string cold)
+        //{
+        //    UserModel query = context.Users.Where(u => u.Id == id).FirstOrDefault();
+
+        //    query.HowCold = cold;
+        //    context.SaveChanges();
+
+        //}
+
     }
 }

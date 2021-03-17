@@ -2,6 +2,7 @@ using FinalProjectRedone.Models;
 using FinalProjectRedone.Repos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -26,26 +27,25 @@ namespace FinalProjectRedone
             services.AddControllersWithViews();
             services.AddTransient<IFinance, FinanceRepo>();
             services.AddDbContext<TaxContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+            services.AddIdentity<UserModel, IdentityRole>().AddEntityFrameworkStores<TaxContext>().AddDefaultTokenProviders();
+     
         }
 
-        public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<TaxContext>
-        {
-            public TaxContext CreateDbContext(string[] args)
-            {
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-                var builder = new DbContextOptionsBuilder<TaxContext>();
-                var connectionString = configuration.GetConnectionString("ConnectionString");
-                builder.UseSqlServer(connectionString);
-                return new TaxContext(builder.Options);
-            }
-        }
+      
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetService<TaxContext>();
+
+                context.Database.Migrate();
+                var userManager = scope.ServiceProvider.GetService(typeof(UserManager<UserModel>));
+                var roleManager = scope.ServiceProvider.GetService(typeof(RoleManager<IdentityRole>));
+                //SeedData.Init(context, (UserManager<UserModel>)userManager, (RoleManager<IdentityRole>)roleManager);
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -62,7 +62,7 @@ namespace FinalProjectRedone
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

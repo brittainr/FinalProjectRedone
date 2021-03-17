@@ -3,18 +3,8 @@
     ViewData["Title"] = "Budget";
 }
 
-<form method="post">
+the purpose of this application is to allow the user to create budgets and then they can set a limit and see if that limit lines up with their budget, as an added bonus it also factors in their taxes as well. 
+This application was so difficult to construct i hope you all can enjoy it as much as i enjoyed creating it.
+this page was origionally supposed to be where the budget was created but then i realized that the budget should be created on a seperate page to add more fluidity to the application. this budget page
+should have still worked but it doesnt anymore so this page is a scrap page. 
 
-    <label asp-for="User.Name">r</label>Name<br />
-    <input asp-for="User.Name" /><br />
-    <label asp-for="BudgetItem">Expense</label><br />
-    <input asp-for="BudgetItem" /><br />
-    <label asp-for="Amount"></label>Cost<br />
-    <input asp-for="Amount" /><br />
-    <button class="m-2 btn btn-primary" type="submit">Submit</button>
-</form>
-<br />
-<hr />
-
-
-<a asp-controller="Budget" asp-action="Budget">Budget</a>

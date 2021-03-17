@@ -18,5 +18,16 @@ namespace FinalProjectRedone.Repos
        
             
         TaxModel GetFinanceByName(string name);
+
+        //weather 
+        IQueryable<Post> Forum { get; }
+
+        void AddPost(Post post);
+        void DeleteRange(string id);
+        void DeletePost(Post post);
+        Post GetPostByTitle(string Title);
+        void UpdatePost(Post post);
+        UserModel GetUser(string username);
+        //void UpdateCold(string id, string cold);
     }
 }

@@ -17,10 +17,14 @@ namespace FinalProjectRedone
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                   Host.CreateDefaultBuilder(args)
+                       .ConfigureWebHostDefaults(webBuilder =>
+                       {
+                           webBuilder.UseStartup<Startup>()
+                          .UseDefaultServiceProvider(           // add this
+                               options => options.ValidateScopes = false);// you need to add this if you want to minipulate scopes using the scopefactory for startup you must make validate scopes FALSE ! otherwise it wont work . 
+                           //try to look into what options.validate scopes does so that you can understand why its not working . 
+                       });
     }
 }
+

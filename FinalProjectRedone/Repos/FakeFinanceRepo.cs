@@ -18,6 +18,8 @@ namespace FinalProjectRedone.Repos
 
         public IQueryable<BudgetModel> Budget { get { return budget.AsQueryable<BudgetModel>(); } }
 
+        IQueryable<Post> IFinance.Forum => throw new NotImplementedException();
+
         public void AddMonth(TaxModel finances)
         {
             finances.TaxID = finance.Count;
@@ -51,9 +53,34 @@ namespace FinalProjectRedone.Repos
 
         }
 
+        void IFinance.AddPost(Post post)
+        {
+            throw new NotImplementedException();
+        }
 
+        void IFinance.DeleteRange(string id)
+        {
+            throw new NotImplementedException();
+        }
 
+        void IFinance.DeletePost(Post post)
+        {
+            throw new NotImplementedException();
+        }
 
+        Post IFinance.GetPostByTitle(string Title)
+        {
+            throw new NotImplementedException();
+        }
 
+        void IFinance.UpdatePost(Post post)
+        {
+            throw new NotImplementedException();
+        }
+
+        UserModel IFinance.GetUser(string username)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
