@@ -1,0 +1,58 @@
+﻿@model Post
+@{
+
+    ViewData["Title"] = "Post";
+}
+
+
+
+<div class="container">
+    <header class="jumbotron">
+        <h1>Welcome to the forum weather fanatics.</h1>
+    </header>
+</div>
+<div>
+    <h1>Posts</h1>
+    <strong>Add your post</strong>
+</div>
+
+<br />
+
+<form method="post">
+    @*@Html.ValidationSummary("", new { @class = "text-danger" }) //this will enforce validation by not allowing the user to enter more than the limit. *@
+    <div class="text-danger" asp-validation-summary="All"></div>
+
+
+    <label asp-for="Topic">Topic</label><br />
+    <input asp-for="Topic" /><br />
+
+    <label asp-for="Text">Text</label><br />
+    <textarea asp-for="Text" placeholder="Write your post here">
+</textarea><br />
+
+    <button class="m-2 btn btn-primary" type="submit">Submit</button>
+</form>
+<br />
+<hr />
+
+<h2>Your post displayed here</h2>
+<p>
+
+    <strong>Topic</strong><br />
+    @Model.Topic<br />
+    <strong>Name:</strong><br />
+    @Model.User.Name<br />
+    <strong>Text:</strong><br />
+    @Model.Text <br />
+    <strong>Date:</strong><br />
+    @Model.Date<br />
+
+</p>
+
+
+
+<a asp-controller="Forum" asp-action="Forum">Forum</a>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,65 @@
+﻿@model List<Post>
+@{
+
+    ViewData["Title"] = "Stories";
+}
+
+<h1 class="display-4">Filter Posts by username</h1>
+Enter a username
+<form method="post" class="container">
+    <div class="row p-2">
+        <label for="input" class="control-label col-md-1">Name</label>
+        <input name="name" class="form-control col-md-6" />
+    </div>
+    <div class="row p-2">
+        <button type="submit" class="form-control btn btn-dark col-2">Submit</button>
+        <a asp-action="Forum" class="btn btn-secondary col-3">Reset</a>
+    </div>
+</form>
+
+@*<h1 class="display-4">Filter Posts by date</h1>
+Enter a date
+<form method="post" class="container">
+    <div class="row p-2">
+        <label for="input" class="control-label col-md-1">Name</label>
+        <input name="date" class="form-control col-md-6" />
+    </div>
+    <div class="row p-2">
+        <button type="submit" class="form-control btn btn-dark col-2">Submit</button>
+        <a asp-action="Forum" class="btn btn-secondary col-3">Reset</a>
+    </div>
+</form>*@
+
+
+<h2>Forum</h2>
+@foreach (Post post in Model)
+{
+    <p>
+        <strong>Title:</strong><br />
+        @post.Topic<br />
+        <strong>Topic</strong><br />
+        @post.Topic<br />
+        <strong>Name:</strong><br />
+        @post.User.Name<br />
+        <strong>Text:</strong><br />
+        @post.Text <br />
+        <strong>Date:</strong><br />
+        @post.Date<br />
+    </p>
+    @foreach (Reply reply in post.Replies)
+    {
+        <p>
+            <strong class="m-3">Reply:</strong>
+            @reply.ReplyText<br />
+            <strong class="m-3">By:</strong>
+            @reply.Replier.UserName<br />
+            <strong class="m-3">Date:</strong>
+            @reply.ReplyDate.Date<br />
+        </p>
+    }
+
+    <a asp-action="Reply" asp-route-postId="@post.PostId" class="btn btn-secondary col-3">Add reply</a>// grab this line fully after creating commentS
+
+
+}
+
