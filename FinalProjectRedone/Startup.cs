@@ -41,7 +41,7 @@ namespace FinalProjectRedone
             {
                 var context = scope.ServiceProvider.GetService<TaxContext>();
 
-                context.Database.Migrate();
+                //context.Database.Migrate();
                 var userManager = scope.ServiceProvider.GetService(typeof(UserManager<UserModel>));
                 var roleManager = scope.ServiceProvider.GetService(typeof(RoleManager<IdentityRole>));
                 //SeedData.Init(context, (UserManager<UserModel>)userManager, (RoleManager<IdentityRole>)roleManager);

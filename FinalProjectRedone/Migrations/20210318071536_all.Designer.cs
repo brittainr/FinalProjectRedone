@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProjectRedone.Migrations
 {
     [DbContext(typeof(TaxContext))]
-    [Migration("20210317114545_Forum")]
-    partial class Forum
+    [Migration("20210318071536_all")]
+    partial class all
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
